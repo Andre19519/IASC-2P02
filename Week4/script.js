@@ -47,6 +47,9 @@ controls.enableDamping = true
 **Meshes**
 *********/
 
+// Clipping Plane
+const clippingPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
+
 // Plane
 const planeGeometry = new THREE.PlaneGeometry(10, 10, 50, 50)
 const planeMaterial = new THREE.MeshBasicMaterial({color: new THREE.Color('blue'), 
@@ -62,7 +65,7 @@ scene.add(plane)
 
 // sphere
 const geometry = new THREE.SphereGeometry(1)
-const material = new THREE.MeshNormalMaterial()
+const material = new THREE.MeshNormalMaterial({clippingPlanes: [ clippingPlane ]})
 const testSphere = new THREE.Mesh(geometry, material)
 
 
@@ -101,6 +104,7 @@ sphereFolder
     .max(5)
     .step(0.1)
     .name('Height')
+    .listen()
 
 sphereFolder
     .add(testSphere.position, 'x')
@@ -108,10 +112,16 @@ sphereFolder
     .max(5)
     .step(0.1)
     .name('Length')
+    .listen()
 
 sphereFolder
     .add(uiObject, 'play')
     .name('animate sphere')
+    
+sphereFolder
+    .add(renderer, 'localClippingEnabled')
+    .name('clip')
+
 
 sphereFolder
     .add(uiObject, 'resetSpherePosition')
