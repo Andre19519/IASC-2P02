@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <title>Assignment 1</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- three.js importmap -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://ga.jspm.io/npm:three@0.158.0/build/three.module.js",
+                "OrbitControls": "https://ga.jspm.io/npm:three@0.158.0/examples/jsm/controls/OrbitControls.js",
+                "lil-gui": "https://ga.jspm.io/npm:lil-gui@0.19.1/dist/lil-gui.esm.js"
+            }
+        }
+    </script>
+
+    <!-- three.js scene -->
+    <script src="script.js" type="module"></script>
+</head>
+<body>
+    <h1>Interactive Essay</h1>
+    <h2>Andre Montrichard</h2>
+
+    <!-- part one -->
+    <section id="part-one">
+        <h2>1. Flatness</h2>
+
+        <p>Inside the depths of the cave, the cave dwellers are witness to shadows projected onto a blank wall which they are forced to look at due to the circumstance of being chained to a cave wall. One day the cave dwellers awake to find that the cave wall has large pointy objects that appear to have come out of the ground overnight and are now being projected upon the wall from the outside world. Being that the dwellers have only ever resided in the cave they come to the conclusion that the newly projected objects are very large versions of the small rocks scattered around the cave. Then after a period of time, the dwellers noticed <span class="clickable" id="first-change">an object form and began moving back and forth across the wall.</span>. As the object was moving, the dwellers deduced that it must be alive and be an entity of some kind. As the entity moves in and out of view it appears to change its size.</p>
+
+        <p>The cave dwellers were unsure of what this mysterious size-changing entity was, and so they came to the conclusion that it must be an otherworldly being. <span class="clickable" id="second-change">Then the entity became much larger and continued its path of moving across the wall.</span>. This scenario can be related to Nick Sousanis’s concept of Flatness in several ways. Sousanis’s concept of flatness can be defined as lacking the ability to deduce that there is deeper meaning and detail behind what is initially seen. The first aspect of the scene that relates to the concept is that of the cave wall itself, which acts as a restriction on what the cave dwellers can see in that it provides a window into the outside world but it does so in a manner that lacks detail. Having shadows as the only way the cave dwellers see the outside world is an ideal representation of Sousanis’s concept of flatness because the dwellers are unable to see anything beyond what is on the surface or in this case the shadow. Secondly, this scene shows that the cave dwellers can’t conceptualize depth as they assume that each rock is directly next to each other in a line which again relates back to Sousanis’s definition of flatness.
+            </p>
+
+        <p><span class="clickable" id="continue-reading">Continue reading</span></p>
+    </section>
+
+    <!-- part two -->
+    <section id="part-two" class="hidden">
+        <h2>2. Seeing Double</h2>
+
+        <p>Outside the cave, the object now realized to be a cloud by the people residing there, comes to a halt over a small settlement made up of several tents which lie upon a grassy landscape. Those outside the cave have taken note of the cloud's existence but are not fixated on it like those within the cave. They simply go on with their daily lives as they would any other day. <span class="clickable" id="third-change">Suddenly the cloud began raining down upon the village</span>, the people outside the cave have come across rain before which is part of the reason they constructed shelters. They also discern that the cloud is not living with its own thoughts and is just another form of water. For those within the cave, however, since they believe that the cloud is some kind of sentient being, they conclude that the entity is angry and is attacking the land.</p>
+
+        <p> <span class="clickable" id="fourth-change">The rain continued for the rest of the day until the sun set</span>. After the sun sets the cave dwellers are left in the dark until daylight and those outside the cave retire to their shelters until the next day. During the night the cave dwellers sleep in fear that the entity may attack them at any moment while the people outside the cave sleep through a rainy night knowing that tomorrow is a new day. This second view of the scene can be related to Soussanis’s concept of seeing double. The concept of seeing double by Nick Sousanis can be defined as having two perspectives that come together to form a true perspective; the concept originates from how human eyes see double and connect them. The seeing double concept uses two viewpoints which can be represented in scene one, the view from the cave dwellers, and two, the view from those outside the cave. The inside cave view is seen as the true view to the cave dwellers but the outside view is true to those outside, but neither group knows that the other exists and therefore doesn’t have the full picture. Using the concept of seeing double it is then realized that the only true perspective is when everything is seen by combining the two perspectives. To conclude, the cave dwellers see only the shadows on the wall and presume the objects to be sharp rocks and an otherworldly entity that they can’t quite explain while the people outside the cave have set up a tent-based settlement and watch as a cloud forms in the air which then rains down upon the tents before the sun sets and the day ends.
+           </p>
+
+        <p><span class="clickable" id="restart">Restart</span></p>
+    </section>
+
+    <canvas class="webgl"></canvas>
+</body>
