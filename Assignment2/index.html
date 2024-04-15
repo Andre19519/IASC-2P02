@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+    <title>Data Visualization Assignment</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- three.js importmap -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://ga.jspm.io/npm:three@0.158.0/build/three.module.js",
+                "OrbitControls": "https://ga.jspm.io/npm:three@0.158.0/examples/jsm/controls/OrbitControls.js",
+                "lil-gui": "https://ga.jspm.io/npm:lil-gui@0.19.1/dist/lil-gui.esm.js"
+            }
+        }
+    </script>
+
+    <!-- dataviz 1 -->
+    <script src="script.js" type="module"></script>
+
+    <!-- dataviz 2 -->
+    <script src="script2.js" type="module"></script>
+</head>
+<body>
+    <h1>FahrenHeit 451, a Visual Analysis</h1>
+    <h2>Andre Montrichard</h2>
+
+    <p>  Fahrenheit 451 is a popular science fiction dystopian novel written by american author Ray Bradbury in 1953, the book is famous for its stance on books being superior to electronic media and its anti censorship themes. The central plot of the book follows protagonist Guy Montag who is a fireman in a futuristic version of the world, in Guy’s world people don’t read books, partake in meaningful conversations, or appreciate nature. Additionally the firemen of this world don’t put out fires, instead they start them to burn any books that are found as the government deems them to be propaganda that encourages independent thought. Montag one day finds himself disconnected from his daily life and decides to read one of the books that he stole from a burn site. This causes Montag to seek out more knowledge but in the process lose everything that he once had in his life, when almost everyone in his life turns on him, leaving Montag to go on the run from the authorities. This text was chosen to be the subject of this project as it is an incredibly influential text with its stance on censorship, predictive technological advancements and warnings on the dangers of mass media. The visual models shown within this project will illustrate the prevalence of the main types of media presented within the text as well as the prevalence of several characters in the supporting cast.</p>
+
+    <p>Within the text there are many forms of media such as television, seashell radios, parlor walls and books. The dominant form is of course television, but other forms like seashell radios which are radios that fit into the listeners ear and parlor walls which is an interactive television that's the size of a wall in a home are all prominent in day to day lives of people living in guys time. The main three that will be focused on in the visualization are books, television, and seashell radios(shortened to seashell because the word is never used outside that context).</p>
+
+    <!-- dataviz 1 -->
+    <div class="canvas-container">
+        <h2>Types of Media in Fahrenheit 451</h2>
+        
+        <canvas class="webgl"></canvas>
+        <div id="parent1"></div>
+        <p>Left click and drag to rotate. Right click and drag to move. Scroll to zoom.</p>
+    </div>
+
+    <p>When looking at the visualization it can be seen that “book” is by far the most prevalent term with “television" and “seashell” following behind it, which makes sense seeing as books are the driving force of the plot. Toggling the visibility on the book term gives a clearer visibility on the other two terms with them having a similar spread across the text as both “television” and “seashell” are everywhere in the world of the book but this is communicated to the reader effectively meaning they aren’t as sought after as books so the reader doesn’t need to be reminded of their existence everytime the protagonist comes across one.
+    </p>
+
+    <!-- dataviz 2 -->
+    <div class="canvas-container">
+        <h2> Supporting Characters in Fahrenheit 451</h2>
+        <canvas class="webgl2"></canvas>
+        <div id="parent2"></div>
+        <p>Left click and drag to rotate. Right click and drag to move. Scroll to zoom.</p>
+    </div>
+
+    <p>he book includes a collection of characters within its cast but the three that will be looked at in this visualization excluding Guy himself are Beatty who is Montag's fire chief, Mildred, Montag's wife, and Faber an older man who mentors Montag on his quest to find freedom and truth. Looking at the second visualization it shows that all three of the characters are commonly seen in a dense cluster that spans a little over the first half of the text with Mildred being mentioned the most followed by Beatty, then Faber. Mildred being mentioned the most with her name being spread out near the end of the book makes sense as she is Guy’s wife and by extension the person he thought he was closest to, meaning that even after he ceases contact with her he still reminisces about their time together as seen by her name being mentioned in the end of the book. Beatty meanwhile has a similar prevalence to Mildred(toggling Faber visibility will further this) because Beatty serves as the book's main antagonist who has gone through similar experiences as Montag but chose to stay in line and not ask questions. Lastly Faber has more dense clusters in his appearances  since he is Guy’s </p>
+
+    <div>
+        <h3>Conclusion</h3>
+
+        <p>To conclude, I am overall satisfied with the final state of this project but there were some aspects of it I wish worked out in the end. Firstly, for the second visualization I was experimenting with having the spheres create a ring with three corresponding color sections to visualize how much a term showed up in a pie chart style, Unfortunately that idea didn’t pan out as I wasn’t able to have the size of the sections accurately reflect the words frequency. Secondly I would’ve wanted to animate the spheres or torus's moving back and forth in a pulsating manner but I ran into a similar issue I had on assignment one where assigning them movement animations makes them all move in the exact same spot at the same time. I believe I would improve on the visualization by creating more in depth animations and changing the shape of the formation.</p>
+    </div>
+    
+</body>

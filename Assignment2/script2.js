@@ -7,20 +7,20 @@ import { OrbitControls } from "OrbitControls"
 ***********/
 // Sizes
 const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-    aspectRatio: window.innerWidth / window.innerHeight
+    width: window.innerWidth / 2.5,
+    height: window.innerWidth / 2.5,
+    aspectRatio: 1
 }
 
 /***********
 ** SCENE **
 ***********/
 // Canvas
-const canvas = document.querySelector('.webgl')
+const canvas = document.querySelector('.webgl2')
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color('white')
+scene.background = new THREE.Color('gray')
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
@@ -53,38 +53,34 @@ scene.add(directionalLight)
 /***********
 ** MESHES **
 ************/
-// Cube Geometry
-const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+// Sphere Geometry
+const sphereGeometry = new THREE.SphereGeometry(0.5)
 
-// Cube Materials
-const redMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('red'),
-    name: 'voldemort',
-    wireframe: true
-})
+// Sphere Materials
 const greenMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('green'),
-    wireframe: true
+    color: new THREE.Color('#3D6059')
 })
 const blueMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('blue'),
-    wireframe: true
+    color: new THREE.Color('#355376')
+})
+const grayMaterial = new THREE.MeshStandardMaterial({
+    color: new THREE.Color('#878780')
 })
 
-const drawCube = (i, material) =>
+const drawSphere = (i, material) =>
 {
-    const cube = new THREE.Mesh(cubeGeometry, material)
-    cube.position.x = (Math.random() - 0.5) * 10
-    cube.position.z = (Math.random() - 0.5) * 10
-    cube.position.y = i - 10
+    const sphere = new THREE.Mesh(sphereGeometry, material)
+    sphere.position.x = (Math.random() - 0.5) * 10
+    sphere.position.z = (Math.random() - 0.5) * 10
+    sphere.position.y = i - 10
 
-    cube.rotation.x = Math.random() * 2 * Math.PI
-    cube.rotation.y = Math.random() * 2 * Math.PI
-    cube.rotation.z = Math.random() * 2 * Math.PI
+    sphere.rotation.x = Math.random() * 2 * Math.PI
+    sphere.rotation.y = Math.random() * 2 * Math.PI
+    sphere.rotation.z = Math.random() * 2 * Math.PI
 
-    cube.name = material.name
+    sphere.randomizer = Math.random()
 
-    scene.add(cube)
+    scene.add(sphere)
 }
 
 
@@ -96,36 +92,14 @@ let preset = {}
 const uiobj = {
     text: '',
     textArray: [],
-    term1: 'cupboard',
-    term2: 'hat',
-    term3: 'broom',
+    term1: 'faber',
+    term2: 'mildred',
+    term3: 'beatty',
     rotateCamera: false,
-    reveal(){
-        // Save terms to uiobj
-        preset = ui.save()
-
-        // Parse Text and Terms
-        parseTextandTerms()
-
-        // Hide termsFolder ui
-        termsFolder.hide()
-
-        // Show interactionFolder ui
-        createInteractionFolders()
-        
-    }
+    animateBubbles: false
 }
 
 // Text Parsers
-// Load source text
-fetch("https://raw.githubusercontent.com/amephraim/nlp/master/texts/J.%20K.%20Rowling%20-%20Harry%20Potter%204%20-%20The%20Goblet%20of%20Fire.txt")
-    .then(response => response.text())
-    .then((data) =>
-    {
-        uiobj.text = data
-    }
-    )
-
 // Parse Text and Terms
 const parseTextandTerms = () =>
 {
@@ -138,13 +112,13 @@ const parseTextandTerms = () =>
     //console.log(uiobj.textArray)
 
     // Find term 1
-    findTermInParsedText(uiobj.term1, redMaterial)
+    findTermInParsedText(uiobj.term1, greenMaterial)
 
     // Find term 2
-    findTermInParsedText(uiobj.term2, greenMaterial)
+    findTermInParsedText(uiobj.term2, blueMaterial)
 
     // Find term 3
-    findTermInParsedText(uiobj.term3, blueMaterial)
+    findTermInParsedText(uiobj.term3, grayMaterial)
 
 }
 
@@ -159,56 +133,54 @@ const findTermInParsedText = (term, material) =>
          // convert i into n, which is a value between 0 and 20
          const n = (100 / uiobj.textArray.length) * i * 0.2
          
-         // call drawCube function 5 times using converted n value
+         // call drawsphere function 5 times using converted n value
          for(let a=0; a < 5; a++)
          {
-            drawCube(n, material)
+            drawSphere(n, material)
          }
 
         }
     }
 }
 
+// Load source text
+fetch("https://raw.githubusercontent.com/timguoqk/cloze/master/books/Fahrenheit%20451%20-%20Ray%20Bradbury.txt")
+    .then(response => response.text())
+    .then((data) =>
+    {
+        uiobj.text = data
+        parseTextandTerms()
+    }
+    )
+
 // UI
-const ui = new dat.GUI()
-
-// Terms Folder
-const termsFolder = ui.addFolder('Enter Terms')
-
-termsFolder
-    .add(uiobj, 'term1')
-    .name('Red Term')
-
-termsFolder
-    .add(uiobj, 'term2')
-    .name('Green Term')
-
-termsFolder
-    .add(uiobj, 'term3')
-    .name('Blue Term')
-
-termsFolder
-    .add(uiobj, 'reveal')
-    .name('Reveal')
-
+const ui = new dat.GUI({
+    container: document.querySelector('#parent2')
+})
 
 // Interaction Folders
-const createInteractionFolders = () =>
-{
-    // Cubes Folder
-    const cubesFolder = ui.addFolder('Filter Terms')
+    // spheres Folder
+    const spheresFolder = ui.addFolder('Filter Terms')
 
-    cubesFolder
-        .add(redMaterial, 'visible')
+    spheresFolder
+        //.add(orangeMaterial, 'visible')
+       // .name(`${uiobj.term1}`)
+
+    spheresFolder
+        .add(greenMaterial, 'visible')
         .name(`${uiobj.term1}`)
 
-    cubesFolder
-        .add(greenMaterial, 'visible')
-        .name(`${uiobj.term2}`)
-
-    cubesFolder
+    spheresFolder
         .add(blueMaterial, 'visible')
+        .name(`${uiobj.term2}`)
+    
+    spheresFolder
+        .add(grayMaterial, 'visible')
         .name(`${uiobj.term3}`)
+
+    spheresFolder
+        .add(uiobj, 'animateBubbles')
+        .name('Animate Bubbles')
 
     // Camera Folder
     const cameraFolder = ui.addFolder('Camera')
@@ -216,12 +188,12 @@ const createInteractionFolders = () =>
     cameraFolder
         .add(uiobj, 'rotateCamera')
         .name('Rotate Camera')
-}
 
 /*******************
 ** ANIMATION LOOP **
 ********************/
 const clock = new THREE.Clock()
+console.log(scene.children)
 
 // Animate
 const animation = () =>
@@ -238,8 +210,21 @@ const animation = () =>
         camera.position.x = Math.sin(elapsedTime * 0.2) * 16
         camera.position.z = Math.cos(elapsedTime * 0.2) * 16
     }
-    
 
+    // Animate Bubbles
+    if(uiobj.animateBubbles){
+        for(let i=0; i < scene.children.length; i++)
+        {
+            if(scene.children[i].type === "Mesh")
+            {
+                scene.children[i].rotation.x = Math.sin(elapsedTime * scene.children[i].randomizer)
+                scene.children[i].rotation.y = Math.sin(elapsedTime * scene.children[i].randomizer)
+                scene.children[i].scale.z = Math.sin(elapsedTime * scene.children[i].randomizer)
+
+                
+            }
+        }
+    }
 
     // Renderer
     renderer.render(scene, camera)

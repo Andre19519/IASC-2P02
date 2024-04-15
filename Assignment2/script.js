@@ -7,9 +7,9 @@ import { OrbitControls } from "OrbitControls"
 ***********/
 // Sizes
 const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-    aspectRatio: window.innerWidth / window.innerHeight
+    width: window.innerWidth / 2.5,
+    height: window.innerWidth / 2.5,
+    aspectRatio: 1
 }
 
 /***********
@@ -20,7 +20,7 @@ const canvas = document.querySelector('.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color('white')
+scene.background = new THREE.Color('gray')
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
@@ -53,38 +53,33 @@ scene.add(directionalLight)
 /***********
 ** MESHES **
 ************/
-// Cube Geometry
-const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+// Torusknot Geometry
+const geometry = new THREE.TorusKnotGeometry(0.5, 0.15, 100, 16)
 
-// Cube Materials
+// torusknot Materials
 const redMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('red'),
-    name: 'voldemort',
-    wireframe: true
+    color: new THREE.Color('#C61C1C')
 })
-const greenMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('green'),
-    wireframe: true
+const yellowMaterial = new THREE.MeshStandardMaterial({
+    color: new THREE.Color('#FAC116')
 })
-const blueMaterial = new THREE.MeshStandardMaterial({
-    color: new THREE.Color('blue'),
-    wireframe: true
+const orangeMaterial = new THREE.MeshStandardMaterial({
+    color: new THREE.Color('#FD7A00')
 })
 
-const drawCube = (i, material) =>
+const drawTorusknot = (i, material) =>
 {
-    const cube = new THREE.Mesh(cubeGeometry, material)
-    cube.position.x = (Math.random() - 0.5) * 10
-    cube.position.z = (Math.random() - 0.5) * 10
-    cube.position.y = i - 10
+    const torusknot = new THREE.Mesh(geometry, material)
+    torusknot.position.x = (Math.random() - 0.5) * 10
+    torusknot.position.z = (Math.random() - 0.5) * 10
+    torusknot.position.y = i - 10
 
-    cube.rotation.x = Math.random() * 2 * Math.PI
-    cube.rotation.y = Math.random() * 2 * Math.PI
-    cube.rotation.z = Math.random() * 2 * Math.PI
+    torusknot.rotation.x = Math.random() * 2 * Math.PI
+    torusknot.rotation.y = Math.random() * 2 * Math.PI
+    torusknot.rotation.z = Math.random() * 2 * Math.PI
+    
 
-    cube.name = material.name
-
-    scene.add(cube)
+    scene.add(torusknot)
 }
 
 
@@ -96,36 +91,13 @@ let preset = {}
 const uiobj = {
     text: '',
     textArray: [],
-    term1: 'cupboard',
-    term2: 'hat',
-    term3: 'broom',
-    rotateCamera: false,
-    reveal(){
-        // Save terms to uiobj
-        preset = ui.save()
-
-        // Parse Text and Terms
-        parseTextandTerms()
-
-        // Hide termsFolder ui
-        termsFolder.hide()
-
-        // Show interactionFolder ui
-        createInteractionFolders()
-        
-    }
+    term1: 'book',
+    term2: 'television',
+    term3: 'seashell',
+    rotateCamera: false
 }
 
 // Text Parsers
-// Load source text
-fetch("https://raw.githubusercontent.com/amephraim/nlp/master/texts/J.%20K.%20Rowling%20-%20Harry%20Potter%204%20-%20The%20Goblet%20of%20Fire.txt")
-    .then(response => response.text())
-    .then((data) =>
-    {
-        uiobj.text = data
-    }
-    )
-
 // Parse Text and Terms
 const parseTextandTerms = () =>
 {
@@ -141,10 +113,10 @@ const parseTextandTerms = () =>
     findTermInParsedText(uiobj.term1, redMaterial)
 
     // Find term 2
-    findTermInParsedText(uiobj.term2, greenMaterial)
+    findTermInParsedText(uiobj.term2, yellowMaterial)
 
     // Find term 3
-    findTermInParsedText(uiobj.term3, blueMaterial)
+    findTermInParsedText(uiobj.term3, orangeMaterial)
 
 }
 
@@ -159,56 +131,47 @@ const findTermInParsedText = (term, material) =>
          // convert i into n, which is a value between 0 and 20
          const n = (100 / uiobj.textArray.length) * i * 0.2
          
-         // call drawCube function 5 times using converted n value
+         // call drawtorusknot function 5 times using converted n value
          for(let a=0; a < 5; a++)
          {
-            drawCube(n, material)
+            drawTorusknot(n, material)
          }
 
         }
     }
 }
 
+// Load source text
+fetch("https://raw.githubusercontent.com/timguoqk/cloze/master/books/Fahrenheit%20451%20-%20Ray%20Bradbury.txt")
+    .then(response => response.text())
+    .then((data) =>
+    {
+        uiobj.text = data
+        parseTextandTerms()
+    }
+    )
+
 // UI
-const ui = new dat.GUI()
-
-// Terms Folder
-const termsFolder = ui.addFolder('Enter Terms')
-
-termsFolder
-    .add(uiobj, 'term1')
-    .name('Red Term')
-
-termsFolder
-    .add(uiobj, 'term2')
-    .name('Green Term')
-
-termsFolder
-    .add(uiobj, 'term3')
-    .name('Blue Term')
-
-termsFolder
-    .add(uiobj, 'reveal')
-    .name('Reveal')
-
+const ui = new dat.GUI({
+    container: document.querySelector('#parent1')
+})
 
 // Interaction Folders
-const createInteractionFolders = () =>
-{
-    // Cubes Folder
-    const cubesFolder = ui.addFolder('Filter Terms')
+    // Torusknots Folder
+    const torusFolder = ui.addFolder('Filter Terms')
 
-    cubesFolder
+    torusFolder
         .add(redMaterial, 'visible')
         .name(`${uiobj.term1}`)
 
-    cubesFolder
-        .add(greenMaterial, 'visible')
+    torusFolder
+        .add(yellowMaterial, 'visible')
         .name(`${uiobj.term2}`)
 
-    cubesFolder
-        .add(blueMaterial, 'visible')
+    torusFolder
+        .add(orangeMaterial, 'visible')
         .name(`${uiobj.term3}`)
+        
 
     // Camera Folder
     const cameraFolder = ui.addFolder('Camera')
@@ -216,7 +179,6 @@ const createInteractionFolders = () =>
     cameraFolder
         .add(uiobj, 'rotateCamera')
         .name('Rotate Camera')
-}
 
 /*******************
 ** ANIMATION LOOP **
@@ -238,8 +200,6 @@ const animation = () =>
         camera.position.x = Math.sin(elapsedTime * 0.2) * 16
         camera.position.z = Math.cos(elapsedTime * 0.2) * 16
     }
-    
-
 
     // Renderer
     renderer.render(scene, camera)
